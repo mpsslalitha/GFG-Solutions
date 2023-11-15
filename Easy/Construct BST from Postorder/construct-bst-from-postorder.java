@@ -60,78 +60,21 @@ class GFG2
 
 // Function should return the root of the bst formed using postorder traversal.
 class GFG
-
 {
-    // public static Node con(int[] post, int i, int b){
-    //     if(i < 0 || post[i]<b) return null;
-    //     Node root = new Node(post[i--]);
-    //     root.right = con(post, i, root.data);
-    //     root.left = con(post, i, b);
-    //     return root;
-    // }
-    // public static Node constructTree(int post[],int n)
-    // {
-    //     //Add your code here.
-    //     int i = n - 1;
-    //     return con(post,i, Integer.MIN_VALUE);
-    // }
+    static int idx;
+    public static Node con(int post[], int ll, int hl){
+        if(idx == -1 || post[idx] > hl || post[idx] < ll) return null;
+        Node root = new Node(post[idx--]);
+        root.right = con(post, root.data, hl);
+        root.left = con(post, ll, root.data);
+        return root;
+    }
     public static Node constructTree(int post[],int n)
-
     {
-
         //Add your code here.
-
-        return construct(post, 0, n-1);
-
+        int ll = Integer.MIN_VALUE;
+        int hl = Integer.MAX_VALUE;
+        idx = n - 1;
+        return con(post, ll, hl); 
     }
-
-    
-
-    //in postorder array root is always at last
-
-    //so basically the idea is to store last element as root
-
-    //travesres back in the array find the first smallest then root elemetn index
-
-    //from start to first smallest eleemtn will be left subtree
-
-    //from first smallest ele + 1 index to end-1 will be right subtree
-
-    //now recursively do the above steps for subtrees until start index is smaller than end
-
-    private static Node construct(int arr[], int start, int end){
-
-        if(start>end)
-
-            return null;
-
-            
-
-        Node node=new Node(arr[end]);
-
-        int i;
-
-        
-
-        for(i=end-1; i>=start; i--){
-
-            if(arr[i]<node.data)
-
-                break;
-
-        }
-
-        
-
-        node.left=construct(arr, start, i);
-
-        node.right=construct(arr, i+1, end-1);
-
-        
-
-        return node;
-
-    }
-
-
 }
