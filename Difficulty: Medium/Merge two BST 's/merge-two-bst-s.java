@@ -109,16 +109,17 @@ class Node
 */
 class Solution {
     public List<Integer> merge(Node root1, Node root2) {
-        List<Integer> list = new ArrayList<>();
-        helper(root1, list);
-        helper(root2, list);
-        Collections.sort(list);
-        return list;
+        List<Integer> sortedList = new ArrayList<>();
+        inOrderTraversal(root1, sortedList);
+        inOrderTraversal(root2, sortedList);
+        sortedList.sort(Integer::compareTo);
+        return sortedList;
     }
-    void helper(Node root, List<Integer> list){
+    
+    private void inOrderTraversal(Node root, List<Integer> sortedList) {
         if (root == null) return;
-        list.add(root.data);
-        helper(root.right, list);
-        helper(root.left, list);
+        inOrderTraversal(root.left, sortedList);
+        sortedList.add(root.data);
+        inOrderTraversal(root.right, sortedList);
     }
 }
